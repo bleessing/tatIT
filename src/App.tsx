@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
+  import React from 'react';
 import './App.css';
+  import DocumentCard from "./components/DocumentCard";
 
 function App() {
   return (
+
     <div className="App">
+
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h2 className='form__title'>Карточка документа</h2>
+        <div className="form">
+
+
+          <DocumentCard/>
+        </div>
       </header>
     </div>
   );
 }
 
-export default App;
+  export default App;

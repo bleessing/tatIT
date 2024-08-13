@@ -1,14 +1,37 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 
-const KfipApplicationForm = () => {
+interface ApplicationFormProps{
+    onSave: (data: any) => void;
+}
+const ApplicationForm: React.FC<ApplicationFormProps> = ({onSave}) => {
     const [status, setStatus]= useState<string>('');
     const statuses = ['Доведение', 'Возврат'];
     const [limit, setLimit] = useState<string>('')
     const limits = ['Инвестиции', 'Эксплуатационные затраты']
+    const [numberKAC, setNumberKAC] = useState<string>('');
+    const [recipient, setRecipient] = useState<string>('')
+    const [financeSize, setFinanceSize] = useState<string>('')
+    const [masteringSize, setMasteringSize] = useState<string>('')
+    const [financeApplication, setFinanceApplication] = useState<string>('')
+
+
+    useEffect(() =>{
+        const data ={
+            numberKAC,
+            status,
+            limit,
+            recipient,
+            financeSize,
+            masteringSize,
+            financeApplication,
+        }
+        onSave(data)
+    }, [numberKAC,status, limit, recipient, financeSize, masteringSize, financeApplication, onSave])
+
     return (
         <Box component='form' sx={{display: 'flex', flexDirection: 'column', gap: 2, }}>
-            <TextField label='Номер по КАС' variant='outlined'/>
+            <TextField label='Номер по КАС' variant='outlined' value={numberKAC} onChange={(e)=> setNumberKAC(e.target.value)}/>
             <FormControl fullWidth>
                 <InputLabel id="status-label">Статус</InputLabel>
                 <Select
@@ -36,10 +59,10 @@ const KfipApplicationForm = () => {
                     ))}
                 </Select>
             </FormControl>
-            <TextField label='Получатель' variant='outlined'/>
-            <TextField label='Размер финансирования' variant='outlined'/>
-            <TextField label='Размер освоения' variant='outlined'/>
-            <TextField label='Заявка на финансирование (номер документа)' variant='outlined'/>
+            <TextField label='Получатель' variant='outlined' value={recipient} onChange={(e) => setRecipient(e.target.value )}/>
+            <TextField label='Размер финансирования' variant='outlined' value={financeSize} onChange={(e) => setFinanceSize(e.target.value)} />
+            <TextField label='Размер освоения' variant='outlined' value={masteringSize} onChange={(e) => setMasteringSize(e.target.value)} />
+            <TextField label='Заявка на финансирование (номер документа)' variant='outlined' value={financeApplication} onChange={(e) => setFinanceApplication(e.target.value)}/>
             <Button variant="contained" component="label">
                 Прикрепить
                 <input type="file" hidden />
@@ -51,4 +74,4 @@ const KfipApplicationForm = () => {
     );
 };
 
-export default KfipApplicationForm;
+export default ApplicationForm;
